@@ -1,0 +1,40 @@
+{
+  "name": "@stravigor/cli",
+  "version": "0.5.6",
+  "type": "module",
+  "description": "CLI framework and code generators for the Strav framework",
+  "license": "MIT",
+  "keywords": ["bun", "framework", "typescript", "strav", "cli"],
+  "strav": {
+    "commands": "src/commands"
+  },
+  "files": ["src/", "package.json", "tsconfig.json", "CHANGELOG.md"],
+  "exports": {
+    ".": "./src/index.ts",
+    "./cli": "./src/cli/index.ts",
+    "./cli/*": "./src/cli/*.ts",
+    "./commands": "./src/commands/index.ts",
+    "./commands/*": "./src/commands/*.ts",
+    "./generators": "./src/generators/index.ts",
+    "./generators/*": "./src/generators/*.ts"
+  },
+  "bin": {
+    "strav": "./src/cli/strav.ts"
+  },
+  "peerDependencies": {
+    "@stravigor/kernel": "workspace:*",
+    "@stravigor/http": "workspace:*",
+    "@stravigor/database": "workspace:*",
+    "@stravigor/queue": "workspace:*",
+    "@stravigor/signal": "workspace:*"
+  },
+  "dependencies": {
+    "chalk": "^5.6.2",
+    "commander": "^14.0.3",
+    "prettier": "^3.8.1"
+  },
+  "scripts": {
+    "test": "bun test tests/",
+    "typecheck": "tsc --noEmit"
+  }
+}
