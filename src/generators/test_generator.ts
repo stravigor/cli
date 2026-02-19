@@ -1,9 +1,17 @@
 import { join } from 'node:path'
 import { Archetype } from '@stravigor/database/schema/types'
 import type { SchemaDefinition } from '@stravigor/database/schema/types'
-import type { DatabaseRepresentation, TableDefinition } from '@stravigor/database/schema/database_representation'
+import type {
+  DatabaseRepresentation,
+  TableDefinition,
+} from '@stravigor/database/schema/database_representation'
 import type { FieldDefinition } from '@stravigor/database/schema/field_definition'
-import { toSnakeCase, toCamelCase, toPascalCase, pluralize } from '@stravigor/kernel/helpers/strings'
+import {
+  toSnakeCase,
+  toCamelCase,
+  toPascalCase,
+  pluralize,
+} from '@stravigor/kernel/helpers/strings'
 import type { GeneratedFile } from './model_generator.ts'
 import type { GeneratorConfig, GeneratorPaths } from './config.ts'
 import { resolvePaths, relativeImport, formatAndWrite } from './config.ts'

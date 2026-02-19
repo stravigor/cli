@@ -8,7 +8,12 @@ import type {
 } from '@stravigor/database/schema/database_representation'
 import type { FieldDefinition, FieldValidator } from '@stravigor/database/schema/field_definition'
 import type { PostgreSQLCustomType } from '@stravigor/database/schema/postgres'
-import { toSnakeCase, toCamelCase, toPascalCase, pluralize } from '@stravigor/kernel/helpers/strings'
+import {
+  toSnakeCase,
+  toCamelCase,
+  toPascalCase,
+  pluralize,
+} from '@stravigor/kernel/helpers/strings'
 import type { GeneratedFile } from './model_generator.ts'
 import type { GeneratorConfig, GeneratorPaths } from './config.ts'
 import { resolvePaths } from './config.ts'
