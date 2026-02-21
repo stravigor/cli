@@ -173,6 +173,7 @@ export default class ModelGenerator {
     let needsPrimaryImport = false
     let needsReferenceImport = false
     let needsAssociateImport = false
+    let needsCastImport = false
 
     for (const ref of references) {
       modelImports.add(ref.modelClass)
@@ -218,6 +219,10 @@ export default class ModelGenerator {
         const propName = toCamelCase(col.name)
         const tsType = this.mapTsType(col, enumImports)
         const schemaDefault = this.formatSchemaDefault(col, schema, tsType)
+        if (this.isDecimalType(col)) {
+          lines.push(`  @cast('number')`)
+          needsCastImport = true
+        }
         if (schemaDefault) {
           lines.push(`  ${propName}: ${tsType} = ${schemaDefault}`)
         } else {
@@ -271,6 +276,7 @@ export default class ModelGenerator {
     if (needsPrimaryImport) decoratorImports.push('primary')
     if (needsReferenceImport) decoratorImports.push('reference')
     if (needsAssociateImport) decoratorImports.push('associate')
+    if (needsCastImport) decoratorImports.push('cast')
     if (decoratorImports.length > 0) {
       importLines.push(
         `import { ${decoratorImports.join(', ')} } from '@stravigor/database/orm/decorators'`
@@ -380,6 +386,14 @@ export default class ModelGenerator {
       default:
         return 'string'
     }
+  }
+
+  /** Returns true for PostgreSQL decimal/float types that Bun returns as strings and need @cast('number'). */
+  private isDecimalType(col: ColumnDefinition): boolean {
+    const pgType = col.pgType
+    if (typeof pgType !== 'string') return false
+    return pgType === 'decimal' || pgType === 'numeric' || pgType === 'real' ||
+           pgType === 'double_precision' || pgType === 'money'
   }
 
   /**
